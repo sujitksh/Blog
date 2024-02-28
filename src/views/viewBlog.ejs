@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('./partials/navbar') %>
+    <div class="container mt-4">
+        <div class="ml-4">
+      <h2><%= blog.title %></h2>
+      <img src="/<%= blog.coverImageURL %>"  height="300px" width="700px">
+      <h4><%= blog.content %></h4>
+      <div class="container mt-4">
+        <img src="<%= blog.createdBy.profileImage %>"  height="50px" width="50px">
+        <span><%= blog.createdBy.fullName %></span>
+      </div>
+    </div>
+    <div class="container mt-3">
+        <h3>Comments (<%= locals.comment.length %>)</h3>
+        <% if(locals.user){ %>
+         <form action="/api/blogs/comment/<%= blog._id%>" method="post">
+            <div class="mb-3 mt-4">
+                <input type="text" class="form-control" id="content" name="content" aria-describedby="content">
+              </div>
+            <button type="submit" class="btn btn-primary">Comment</button>
+          </form>
+        <% } %>
+    </div>
+    <div class="mt-3">
+        <% comment.forEach(comment=>{%>
+            <div>
+                <img src="<%= comment.createdBy.profileImage %>"  height="30px" width="30px">
+                <span><%= comment.createdBy?.fullName %></span>
+                <pre><%= comment.content %></pre>
+            </div><br>
+        <% }) %>
+    </div>
+</div>
+    <%- include('./partials/scripts') %>
+</body>
+</html>
